@@ -10,26 +10,13 @@ def URL_and_houseprof():
    questions = [ 
 
             inquirer.List('operation', message= 'Which operation you want to perform?', choices = ['rent', 'sale']),
-             
-            inquirer.Confirm('confirmator', message= 'Would you like to add any other information?', default=False)
-            ]
+                         ]
 
    main_answers = inquirer.prompt(questions)
 
+   if main_answers['operation'] == 'rent':
 
-   if main_answers['confirmator'] == False: # Uses the mandatory parameters only excluding extra filters
-
-         url = f'http://api.idealista.com/3.5/pt/search?operation={main_answers["operation"]}&propertyType=homes&center={center}&distance={distance}'
-
-         house_profile = main_answers
-         house_profile['country'] = 'pt'
-         house_profile['latitude'] = 38.737037
-         house_profile['longitude'] = -9.133802
-         house_profile['distance'] = distance
-
-
-   elif main_answers['confirmator'] == True: #If the user wants to add extra information
-
+      propertyType = inquirer.prompt([inquirer.List('propertyType',message='What is the type of property?', choices=['flat', 'duplex', 'studio', 'penthouse'])])
       sizehome = input('What is the size of the property? (minimum 60, maximum 1000)\n ')
       bedrooms = input('How many bedrooms? (insert numbers only up to 4)\n ')
       bathrooms = input('How many bathrooms? (insert numbers only up to 3)\n ')
@@ -45,6 +32,6 @@ def URL_and_houseprof():
       house_profile['latitude'] = 38.737037
       house_profile['longitude'] = -9.133802  
       house_profile['distance'] = distance
-           
+         
 
    return url, house_profile

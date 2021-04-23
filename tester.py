@@ -9,4 +9,5 @@ print(search_api(token,"http://api.idealista.com/3.5/pt/search?operation=sale&pr
 
 url, house = URL_and_houseprof()
 
-print(url,'\n',house,'\n\n')
+print(url,'\n',house,
+

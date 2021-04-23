@@ -2,8 +2,8 @@ import json
 import requests as rq
 import base64
 import getpass
-from httplib2 import Http
 import re
+import time
 
 def get_oauth_token():
     """input: Apikey and Secret (password)
