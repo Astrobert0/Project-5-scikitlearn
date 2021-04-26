@@ -10,8 +10,8 @@ def get_oauth_token():
     It returns a dictionary with the acces token, expiration time (in seconds), token type and scope""" 
 
     url = "https://api.idealista.com/oauth/token" 
-    key = getpass.getpass(prompt = 'Please insert the Apikey \n')
-    secretkey = getpass.getpass(prompt = 'Please insert the Secret code \n')
+    key = input('Please insert the Apikey \n')
+    secretkey = input('Please insert the Secret code \n')
     rule1 = 'b\''
     rule2 = '\''
   
