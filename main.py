@@ -2,7 +2,12 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import pickle
 import pandas as pd
+import warnings
+import time
+warnings.filterwarnings("ignore") #LATER RUN ALL IN HQ WITH ALL THE LIBRARIES UPDATED
         
+
+
 def input_variable_confirmation():
     try:
         int(property_size.get())
@@ -10,7 +15,6 @@ def input_variable_confirmation():
         float(latitude.get())
         float(longitude.get())
         input_list_construct()
-        answer.config(text= 'Predicting...')
     except ValueError:
         answer.config(text= 'Somewhere it was inserted a wrong value')
         
@@ -33,15 +37,20 @@ def input_list_construct():
         house_prf['propertyType_studio'] += 1
 
     operationType = variableoperation.get()
-
     prediction(house_profile= house_prf, operation=operationType)
 
 def prediction(house_profile, operation):
-    df = pd.DataFrame(house_profile, index=[0])
-    answer.config(text= f'Your price is {model_prediction}')
+    if operation == 'rent':
+        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
+        df = pd.DataFrame(house_profile, index=[0])
+        model_predict = model.predict(df)
+        answer.config(text= f'The price of your house is {model_predict[0]}')
 
-
-
+    elif operation== 'sale':
+        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\sale_model_treeregr.sav','rb'))
+        df = pd.DataFrame(house_profile, index=[0])
+        model_predict = model.predict(df)
+        answer.config(text= f'The price of your house is {model_predict[0]}')
 
 
 
@@ -61,7 +70,7 @@ property_size.grid(row=0, column=1)
 L2 = tk.Label(root, text='Insert the coordinates').grid(row=1, column=0)
 
 #loading image
-load = Image.open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
+load = Image.open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\Images\coord_find.png')
 load = load.resize((370, 201), Image.ANTIALIAS)
 
 render = ImageTk.PhotoImage(load)
