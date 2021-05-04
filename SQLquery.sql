@@ -1,67 +1,32 @@
-CREATE TABLE rent(
 
-	unnamed INT NOT NULL,
-    propertyCode INT NOT NULL,
-    price INT NOT NULL,
-    operation CHAR(5) NOT NULL,
-    size FLOAT(4,2) NOT NULL,
-    rooms INT NOT NULL,
-    bathrooms INT NOT NULL,
-    latitude FLOAT,
-    longitude FLOAT,
-    priceByArea FLOAT,
-    propertyType CHAR,
-    floorNumeric FLOAT,
-    PRIMARY KEY (propertyCode)
-);
+/*rent analysis ----------------------------------------------*/
+CREATE TEMPORARY TABLE rent_full
+SELECT * FROM project_5.rent1
+LIMIT 0 
+;
+INSERT INTO project_5.rent_full
+SELECT *
+	FROM project_5.rent2
+;
+INSERT INTO project_5.rent_full
+SELECT *
+	FROM project_5.rent1
+;
+SELECT ROUND(AVG(price)) AS 'AveragePrice', ROUND(AVG(size)) AS 'AverageSize', ROUND(AVG(priceByArea)) AS 'AVG_PriceByArea' FROM project_5.rent_full
+;
 
-CREATE TABLE sale(
 
-	unnamed INT NOT NULL,
-    propertyCode INT NOT NULL,
-    price INT NOT NULL,
-    operation CHAR(5) NOT NULL,
-    size FLOAT(4,2) NOT NULL,
-    rooms INT NOT NULL,
-    bathrooms INT NOT NULL,
-    latitude FLOAT,
-    longitude FLOAT,
-    priceByArea FLOAT,
-    propertyType CHAR,
-    floorNumeric FLOAT,
-    PRIMARY KEY (propertyCode)
-);
-
-CREATE TABLE rent_test(
-
-	unnamed INT NOT NULL,
-    propertyCode INT NOT NULL,
-    price INT NOT NULL,
-    operation CHAR(5) NOT NULL,
-    size FLOAT(4,2) NOT NULL,
-    rooms INT NOT NULL,
-    bathrooms INT NOT NULL,
-    latitude FLOAT,
-    longitude FLOAT,
-    priceByArea FLOAT,
-    propertyType CHAR,
-    floorNumeric FLOAT,
-    PRIMARY KEY (propertyCode)
-);
-
-CREATE TABLE sale_test(
-
-	unnamed INT NOT NULL,
-    propertyCode INT NOT NULL,
-    price INT NOT NULL,
-    operation CHAR(5) NOT NULL,
-    size FLOAT(4,2) NOT NULL,
-    rooms INT NOT NULL,
-    bathrooms INT NOT NULL,
-    latitude FLOAT,
-    longitude FLOAT,
-    priceByArea FLOAT,
-    propertyType CHAR,
-    floorNumeric FLOAT,
-    PRIMARY KEY (propertyCode)
-);
+/*sale analysis --------------------------------------------------*/
+CREATE TEMPORARY TABLE sale_full
+SELECT * FROM project_5.sale1
+LIMIT 0 
+;
+INSERT INTO project_5.sale_full
+SELECT *
+	FROM project_5.sale2
+;
+INSERT INTO project_5.sale_full
+SELECT *
+	FROM project_5.sale1
+;
+SELECT ROUND(AVG(price), 3) AS 'AveragePrice', ROUND(AVG(size)) AS 'AverageSize', ROUND(AVG(priceByArea),3) AS 'AVG_PriceByArea' FROM project_5.sale_full
