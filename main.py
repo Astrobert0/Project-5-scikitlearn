@@ -3,7 +3,9 @@ from PIL import Image, ImageTk
 import pickle
 import pandas as pd
 import warnings
+import xgboost as xgb 
 import time
+
 warnings.filterwarnings("ignore") #LATER RUN ALL IN HQ WITH ALL THE LIBRARIES UPDATED
         
 
@@ -16,14 +18,13 @@ def input_variable_confirmation():
         float(longitude.get())
         input_list_construct()
     except ValueError:
-        answer.config(text= 'Somewhere it was inserted a wrong value')
+        answer.config(text= 'A wrong value was inserted')
         
 def input_list_construct():
     house_prf= {'size':int(property_size.get()), 'rooms':variablerooms.get(),'bathrooms':variablebathrooms.get(),'latitude':float(latitude.get()), 'longitude':float(longitude.get()), 
     'floorNumeric':int(floor.get()),'propertyType_duplex': 0, 'propertyType_flat': 0,'propertyType_penthouse':0,'propertyType_studio': 0}
     propert = variableproperty.get()
     
-
     if propert == 'duplex': 
         house_prf['propertyType_duplex'] += 1
 
@@ -39,20 +40,25 @@ def input_list_construct():
     operationType = variableoperation.get()
     prediction(house_profile= house_prf, operation=operationType)
 
+ 
+
 def prediction(house_profile, operation):
     if operation == 'rent':
-        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
+        model = pickle.load(open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\rent_model.sav','rb'))
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
 
     elif operation== 'sale':
-        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\sale_model_treeregr.sav','rb'))
+        model = xgb.XGBRegressor()
+        model.load_model(r"C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
 
 
+def image_show():
+    img.show()
 
 root = tk.Tk()
 
@@ -70,12 +76,12 @@ property_size.grid(row=0, column=1)
 L2 = tk.Label(root, text='Insert the coordinates').grid(row=1, column=0)
 
 #loading image
-load = Image.open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\Images\coord_find.png')
-load = load.resize((370, 201), Image.ANTIALIAS)
+img = Image.open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
+#load = load.resize((370, 201), Image.ANTIALIAS)
 
-render = ImageTk.PhotoImage(load)
 # setting image with the help of label
-tk.Label(root, image = render).grid(row = 2, column = 0, columnspan = 1, rowspan = 2, padx = 5, pady = 5)
+image_button = tk.Button(root, text='How can i find it?', command= image_show)
+image_button.grid(row = 2, column = 0, columnspan = 1, rowspan = 2, padx = 5, pady = 5)
 
 #Latitude and longitude
 L3 = tk.Label(root,text='Latitude').grid(row=2, column=1)
