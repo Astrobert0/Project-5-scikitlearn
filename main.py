@@ -44,14 +44,14 @@ def input_list_construct():
 
 def prediction(house_profile, operation):
     if operation == 'rent':
-        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
+        model = pickle.load(open(r'C:\Users\Sebas!\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
 
     elif operation== 'sale':
         model = xgb.XGBRegressor()
-        model.load_model(r"C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
+        model.load_model(r"C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
@@ -62,7 +62,8 @@ def image_show():
 
 root = tk.Tk()
 
-root.geometry('500x400')
+root.geometry('500x350')
+
 
 root.title('Price predictor')
 
@@ -86,7 +87,7 @@ property_size.grid(row=0, column=1)
 L2 = tk.Label(root, text='Insert the coordinates').grid(row=2, column=0)
 
 #loading image
-img = Image.open(r'C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
+img = Image.open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
 #load = load.resize((370, 201), Image.ANTIALIAS)
 
 # setting image with the help of label
@@ -151,11 +152,11 @@ bathrooms.grid(row=11, column=1)
 #Predict script----------------
 
 predict_button = tk.Button(root, text='Predict', bg="#20bebe", fg='white', command=  input_variable_confirmation)
-predict_button.grid(row=15, column=0)
+predict_button.grid(row=17, column=0)
 
 
 #Exit button-----------------------------------------------------------------------------------------------------------------------------------------------------
 exit_button = tk.Button(root, text="Exit",  bg="red",fg="white", command=root.destroy)
-exit_button.grid(row=15, column=2)
+exit_button.grid(row=17, column=2)
 
 root.mainloop()
