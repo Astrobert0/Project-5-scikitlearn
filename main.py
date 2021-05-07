@@ -6,7 +6,7 @@ import warnings
 import xgboost as xgb 
 import time
 
-warnings.filterwarnings("ignore") #LATER RUN ALL IN HQ WITH ALL THE LIBRARIES UPDATED
+warnings.filterwarnings("ignore") 
         
 
 
@@ -44,14 +44,14 @@ def input_list_construct():
 
 def prediction(house_profile, operation):
     if operation == 'rent':
-        model = pickle.load(open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\rent_model.sav','rb'))
+        model = pickle.load(open(r'C:\Users\sebas\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
 
     elif operation== 'sale':
         model = xgb.XGBRegressor()
-        model.load_model(r"C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
+        model.load_model(r"C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
         answer.config(text= f'The price of your house is {model_predict[0]}')
@@ -61,6 +61,16 @@ def image_show():
     img.show()
 
 root = tk.Tk()
+
+root.geometry('500x400')
+
+root.title('Price predictor')
+
+#white labels to give more space----------------------------------------------------------------------------------------------------------------------------------
+white1 = tk.Label(root,text='').grid(row=1, column=0) #size
+white2 = tk.Label(root,text='').grid(row=5, column=0) #coordinates
+white3 = tk.Label(root,text='').grid(row=7, column=0) #coordinates
+
 
 #Answer label-----------------------------------------------------------------------------------------------------------------------------------------------------
 answer = tk.Label(root, text='')
@@ -73,79 +83,79 @@ property_size = tk.Entry(root)
 property_size.grid(row=0, column=1)
 
 #coordinates-----------------------------------------------------------------------------------------------------------------------------------------------------
-L2 = tk.Label(root, text='Insert the coordinates').grid(row=1, column=0)
+L2 = tk.Label(root, text='Insert the coordinates').grid(row=2, column=0)
 
 #loading image
-img = Image.open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
+img = Image.open(r'C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
 #load = load.resize((370, 201), Image.ANTIALIAS)
 
 # setting image with the help of label
 image_button = tk.Button(root, text='How can i find it?', command= image_show)
-image_button.grid(row = 2, column = 0, columnspan = 1, rowspan = 2, padx = 5, pady = 5)
+image_button.grid(row = 3, column = 0, columnspan = 1, rowspan = 2, padx = 5, pady = 5)
 
 #Latitude and longitude
-L3 = tk.Label(root,text='Latitude').grid(row=2, column=1)
+L3 = tk.Label(root,text='Latitude').grid(row=3, column=1)
 
 latitude = tk.Entry(root)
-latitude.grid(row=2, column=2)
+latitude.grid(row=3, column=2)
 
-L4 = tk.Label(root, text= 'Longitude').grid(row=3, column=1)
+L4 = tk.Label(root, text= 'Longitude').grid(row=4, column=1)
 
 longitude = tk.Entry(root)
-longitude.grid(row=3, column=2)
+longitude.grid(row=4, column=2)
 
 #floor-----------------------------------------------------------------------------------------------------------------------------------------------------
-L5 = tk.Label(root, text = 'Insert the floor (If it\'s ground floor, insert 0)').grid(row=4, column=0)
+L5 = tk.Label(root, text = 'Insert the floor (If it\'s ground floor, insert 0)').grid(row=6, column=0)
 
 floor = tk.Entry(root, validate= 'key')
-floor.grid(row=4,column= 1)
+floor.grid(row=6,column= 1)
 
 #property type-----------------------------------------------------------------------------------------------------------------------------------------------------
-L6 = tk.Label(root, text = 'Select the property type').grid(row=5, column=0)
+L6 = tk.Label(root, text = 'Select the property type').grid(row=8, column=0)
 
 properties = ['flat', 'duplex','penthouse','studio']
 variableproperty = tk.StringVar(root)
 variableproperty.set(properties[0])
 
 propertyType = tk.OptionMenu(root, variableproperty, *properties)
-propertyType.grid(row=5, column=1)
+propertyType.grid(row=8, column=1)
 
 #operation-----------------------------------------------------------------------------------------------------------------------------------------------------
-L7 = tk.Label(root, text = 'Select the operation').grid(row=6, column=0)
+L7 = tk.Label(root, text = 'Select the operation').grid(row=9, column=0)
 
 operationList = ['rent', 'sale']
 variableoperation = tk.StringVar(root)
 variableoperation.set('rent')
 
 operation = tk.OptionMenu(root, variableoperation, *operationList)
-operation.grid(row=6, column=1)
+operation.grid(row=9, column=1)
 #rooms-----------------------------------------------------------------------------------------------------------------------------------------------------
-L8 = tk.Label(root, text = 'Select the ammount of rooms').grid(row=7, column=0)
+L8 = tk.Label(root, text = 'Select the ammount of rooms').grid(row=10, column=0)
 
 roomList = [0,1,2,3,4]
 variablerooms = tk.IntVar(root)
 variablerooms.set(roomList[0])
 
 rooms = tk.OptionMenu(root, variablerooms, *roomList)
-rooms.grid(row=7, column=1)
+rooms.grid(row=10, column=1)
 
 #bathrooms-----------------------------------------------------------------------------------------------------------------------------------------------------
-L9 = tk.Label(root, text = 'Select the ammount of bathrooms').grid(row=8, column=0)
+L9 = tk.Label(root, text = 'Select the ammount of bathrooms').grid(row=11, column=0)
 
 bathList = [1,2,3,4]
 variablebathrooms = tk.IntVar(root)
 variablebathrooms.set(bathList[0])
 
 bathrooms = tk.OptionMenu(root, variablebathrooms, *bathList)
-bathrooms.grid(row=8, column=1)
+bathrooms.grid(row=11, column=1)
 #Predict script----------------
 
 predict_button = tk.Button(root, text='Predict', bg="#20bebe", fg='white', command=  input_variable_confirmation)
-predict_button.grid(row=9, column=0)
+predict_button.grid(row=15, column=0)
 
 
 #Exit button-----------------------------------------------------------------------------------------------------------------------------------------------------
 exit_button = tk.Button(root, text="Exit",  bg="red",fg="white", command=root.destroy)
-exit_button.grid(row=9, column=2)
+exit_button.grid(row=15, column=2)
 
 root.mainloop()
