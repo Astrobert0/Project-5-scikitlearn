@@ -44,17 +44,17 @@ def input_list_construct():
 
 def prediction(house_profile, operation):
     if operation == 'rent':
-        model = pickle.load(open(r'C:\Users\Sebas!\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
+        model = pickle.load(open(r'C:\Users\Sebas\Documents\github\Project-5-scikitlearn\rent_model.sav','rb'))
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
-        answer.config(text= f'The price of your house is {model_predict[0]}')
+        answer.config(text= f'The price is {model_predict[0]}')
 
     elif operation== 'sale':
         model = xgb.XGBRegressor()
-        model.load_model(r"C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
+        model.load_model(r"C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\sale_model.json")
         df = pd.DataFrame(house_profile, index=[0])
         model_predict = model.predict(df)
-        answer.config(text= f'The price of your house is {model_predict[0]}')
+        answer.config(text= f'The price is {model_predict[0]}')
 
 
 def image_show():
@@ -62,7 +62,7 @@ def image_show():
 
 root = tk.Tk()
 
-root.geometry('500x350')
+root.geometry('550x350')
 
 
 root.title('Price predictor')
@@ -75,7 +75,7 @@ white3 = tk.Label(root,text='').grid(row=7, column=0) #coordinates
 
 #Answer label-----------------------------------------------------------------------------------------------------------------------------------------------------
 answer = tk.Label(root, text='')
-answer.grid(row=9, column=1)
+answer.grid(row=17, column=1)
 
 #Property size-----------------------------------------------------------------------------------------------------------------------------------------------------
 L1 = tk.Label(root, text= 'Insert the property size').grid(row=0,column=0)
@@ -87,7 +87,7 @@ property_size.grid(row=0, column=1)
 L2 = tk.Label(root, text='Insert the coordinates').grid(row=2, column=0)
 
 #loading image
-img = Image.open(r'C:\Users\Sebas!\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
+img = Image.open(r'C:\Users\Sebas\Documents\GitHub\Project-5-scikitlearn\Images\coord_find.png')
 #load = load.resize((370, 201), Image.ANTIALIAS)
 
 # setting image with the help of label
